@@ -104,6 +104,20 @@ const revealTargets = document.querySelectorAll(
   ".hero-copy h1, .hero-actions, .credibility-line, .section-heading, .page-hero > *, .product-copy, .product-video-panel, .service-grid article, .detail-grid article, .project-list article, .catalog-grid article, .policy-grid article, .people-grid article, .team-showcase article, .contact-card, .footer-cta"
 );
 
+const typographyTargets = document.querySelectorAll("h1, h2, h3, .eyebrow, .footer-pill");
+
+typographyTargets.forEach((target) => {
+  const text = target.textContent?.trim();
+  if (!text || target.dataset.typographyReady === "true") return;
+
+  target.dataset.typographyReady = "true";
+  target.setAttribute("aria-label", text);
+  target.innerHTML = text
+    .split(/\s+/)
+    .map((word, index) => `<span class="type-word" style="--word-index:${index}">${word}</span>`)
+    .join(" ");
+});
+
 if (revealTargets.length) {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
