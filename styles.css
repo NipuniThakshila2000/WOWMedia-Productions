@@ -900,6 +900,18 @@ p {
   max-height: 150px;
 }
 
+.impact-logo-light {
+  display: none;
+}
+
+body[data-theme="light"] .impact-logo-dark {
+  display: none;
+}
+
+body[data-theme="light"] .impact-logo-light {
+  display: block;
+}
+
 .project-media {
   min-height: 220px;
   margin: -24px -24px 22px;
