@@ -104,7 +104,7 @@ if (brandWord) {
 }
 
 const revealTargets = document.querySelectorAll(
-  ".hero-copy .eyebrow, .hero-copy h1, .hero-actions, .credibility-line, .section-heading, .page-hero > *, .product-copy, .product-video-panel, .service-grid article, .detail-grid article, .project-list article, .catalog-grid article, .policy-grid article, .people-grid article, .team-showcase article, .contact-card, .footer-cta"
+  ".hero-copy .eyebrow, .hero-copy h1, .hero-actions, .credibility-line, .partner-heading, .section-heading, .page-hero > *, .product-copy, .product-video-panel, .service-grid article, .detail-grid article, .project-list article, .catalog-grid article, .policy-grid article, .people-grid article, .team-showcase article, .contact-card, .footer-cta"
 );
 
 const typographyTargets = document.querySelectorAll("h1, h2, h3, .eyebrow, .footer-pill");

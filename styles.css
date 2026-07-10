@@ -2718,7 +2718,8 @@ body[data-theme="light"] .partner-strip .logo-ciq {
   }
 
   .brand-switch-word {
-    display: none;
+    display: inline-block;
+    min-width: 52px;
   }
 
   .theme-toggle {
