@@ -256,8 +256,8 @@ body[data-theme="light"] .theme-toggle-thumb {
 
 .type-word {
   display: inline-block;
-  opacity: 0;
-  transform: translateY(0.72em) rotateX(18deg);
+  opacity: 1;
+  transform: translateY(0) rotateX(0);
   transform-origin: left bottom;
   transition:
     opacity 560ms ease,
@@ -266,7 +266,12 @@ body[data-theme="light"] .theme-toggle-thumb {
   will-change: opacity, transform;
 }
 
-.is-visible .type-word,
+.reveal-on-scroll .type-word {
+  opacity: 0;
+  transform: translateY(0.72em) rotateX(18deg);
+}
+
+.reveal-on-scroll.is-visible .type-word,
 .site-header .type-word {
   opacity: 1;
   transform: translateY(0) rotateX(0);
@@ -970,11 +975,11 @@ p {
 }
 
 .portrait-nipuni {
-  --portrait: url("team%20and%20navigators/Nipuni.jpg");
+  --portrait: url("team%20and%20navigators/Nipu.jpg");
 }
 
 .portrait-nidul {
-  --portrait: url("team%20and%20navigators/Nidul.png");
+  --portrait: url("team%20and%20navigators/Nidul%202.jpg");
 }
 
 .portrait-loshi {

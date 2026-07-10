@@ -7,8 +7,8 @@ const brandLogo = document.querySelector(".brand-mark img");
 const brandLogoDark = "WOW MEDIA-01.png";
 const brandLogoLight = "media/logos-light/1_0010_Wow-Media-Logo-1.png";
 const impactLogo = document.querySelector(".impact-logo-media img");
-const impactLogoDark = "media/logos/our-impact-future.png";
-const impactLogoLight = "media/logos-light/1_0002_our-impact-future.png";
+const impactLogoDark = impactLogo?.dataset.darkSrc ?? "media/logos/our-impact-future.png";
+const impactLogoLight = impactLogo?.dataset.lightSrc ?? "media/logos-light/1_0002_our-impact-future.png";
 const partnerLogoMap = {
   "media/logos/_0000_CIQ-(1)-(2).png": "media/logos-light/1_0000s_0017__0000_CIQ-(1)-(2).png",
   "media/logos/_0001_lpl-logo-copy.jpg.png": "media/logos-light/1_0000s_0000__0001_lpl-logo-copy.jpg.png",
@@ -104,7 +104,7 @@ if (brandWord) {
 }
 
 const revealTargets = document.querySelectorAll(
-  ".hero-copy .eyebrow, .hero-copy h1, .hero-actions, .credibility-line, .partner-heading, .section-heading, .page-hero > *, .product-copy, .product-video-panel, .service-grid article, .detail-grid article, .project-list article, .catalog-grid article, .policy-grid article, .people-grid article, .team-showcase article, .contact-card, .footer-cta"
+  ".hero-copy .eyebrow, .hero-copy h1, .hero-actions, .credibility-line, .partner-heading, .section-heading, .page-hero > *, .product-copy, .product-video-panel, .contact-copy, .service-grid article, .detail-grid article, .project-list article, .catalog-grid article, .policy-grid article, .people-grid article, .team-showcase article, .contact-card, .footer-cta"
 );
 
 const typographyTargets = document.querySelectorAll("h1, h2, h3, .eyebrow, .footer-pill");
