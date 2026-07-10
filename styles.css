@@ -1780,6 +1780,10 @@ body[data-theme="light"] .footer-logo {
   background: rgba(255, 255, 255, 0.78);
 }
 
+body[data-theme="light"] .footer-logo img {
+  filter: brightness(0);
+}
+
 body[data-theme="light"] .brand-copy {
   color: rgba(16, 23, 35, 0.86);
 }

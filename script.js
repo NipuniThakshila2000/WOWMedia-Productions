@@ -90,14 +90,17 @@ themeToggle?.addEventListener("click", () => {
 });
 
 if (brandWord) {
-  window.setTimeout(() => {
+  const switchBrandWord = () => {
+    const showTech = brandWord.textContent?.trim() !== "Tech";
     brandWord.classList.add("is-changing");
     window.setTimeout(() => {
-      brandWord.textContent = "Tech";
+      brandWord.textContent = showTech ? "Tech" : "Productions";
       brandWord.classList.remove("is-changing");
-      brandWord.classList.add("is-tech");
+      brandWord.classList.toggle("is-tech", showTech);
     }, 180);
-  }, 8000);
+  };
+
+  window.setInterval(switchBrandWord, 8000);
 }
 
 const revealTargets = document.querySelectorAll(
