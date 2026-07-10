@@ -898,6 +898,7 @@ p {
 .impact-logo-media img {
   max-width: min(100%, 300px);
   max-height: 150px;
+  filter: brightness(0);
 }
 
 .impact-logo-media {
