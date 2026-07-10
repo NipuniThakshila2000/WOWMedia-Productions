@@ -104,7 +104,7 @@ if (brandWord) {
 }
 
 const revealTargets = document.querySelectorAll(
-  ".hero-copy h1, .hero-actions, .credibility-line, .section-heading, .page-hero > *, .product-copy, .product-video-panel, .service-grid article, .detail-grid article, .project-list article, .catalog-grid article, .policy-grid article, .people-grid article, .team-showcase article, .contact-card, .footer-cta"
+  ".hero-copy .eyebrow, .hero-copy h1, .hero-actions, .credibility-line, .section-heading, .page-hero > *, .product-copy, .product-video-panel, .service-grid article, .detail-grid article, .project-list article, .catalog-grid article, .policy-grid article, .people-grid article, .team-showcase article, .contact-card, .footer-cta"
 );
 
 const typographyTargets = document.querySelectorAll("h1, h2, h3, .eyebrow, .footer-pill");
@@ -124,7 +124,8 @@ typographyTargets.forEach((target) => {
 if (revealTargets.length) {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  revealTargets.forEach((target) => {
+  revealTargets.forEach((target, index) => {
+    target.style.setProperty("--reveal-index", String(index % 6));
     target.classList.add("reveal-on-scroll");
     if (prefersReducedMotion) target.classList.add("is-visible");
   });
@@ -142,6 +143,74 @@ if (revealTargets.length) {
     );
 
     revealTargets.forEach((target) => revealObserver.observe(target));
+  }
+}
+
+const metricValues = document.querySelectorAll(".metrics-grid strong");
+
+if (metricValues.length) {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const parseMetric = (value) => {
+    const trimmed = value.trim();
+    const suffix = trimmed.replace(/[\d.]/g, "");
+    const number = Number.parseFloat(trimmed.replace(/[^\d.]/g, ""));
+    return { number: Number.isFinite(number) ? number : 0, suffix };
+  };
+
+  const formatMetric = (value, suffix) => {
+    const hasDecimal = suffix.includes("M") && value < 10;
+    const displayValue = hasDecimal ? value.toFixed(1).replace(".0", "") : Math.round(value).toLocaleString("en-US").replace(/,/g, "");
+    return `${displayValue}${suffix}`;
+  };
+
+  const animateMetric = (target) => {
+    if (target.dataset.counted === "true") return;
+    target.dataset.counted = "true";
+
+    const originalValue = target.textContent ?? "";
+    const { number, suffix } = parseMetric(originalValue);
+
+    if (prefersReducedMotion || number === 0) {
+      target.textContent = originalValue;
+      return;
+    }
+
+    const duration = 1200;
+    const start = performance.now();
+    target.classList.add("is-counting");
+
+    const tick = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      target.textContent = formatMetric(number * eased, suffix);
+
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        target.textContent = originalValue;
+        window.setTimeout(() => target.classList.remove("is-counting"), 240);
+      }
+    };
+
+    requestAnimationFrame(tick);
+  };
+
+  if (prefersReducedMotion) {
+    metricValues.forEach(animateMetric);
+  } else {
+    const metricObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          metricValues.forEach(animateMetric);
+          observer.disconnect();
+        });
+      },
+      { threshold: 0.28 }
+    );
+
+    metricObserver.observe(metricValues[0].closest(".metrics-grid") ?? metricValues[0]);
   }
 }
 
