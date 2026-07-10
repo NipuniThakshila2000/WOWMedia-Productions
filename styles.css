@@ -900,16 +900,12 @@ p {
   max-height: 150px;
 }
 
-.impact-logo-light {
-  display: none;
+.impact-logo-media {
+  background: #ffffff;
 }
 
-body[data-theme="light"] .impact-logo-dark {
-  display: none;
-}
-
-body[data-theme="light"] .impact-logo-light {
-  display: block;
+body[data-theme="light"] .impact-logo-media {
+  background: #ffffff;
 }
 
 .project-media {
