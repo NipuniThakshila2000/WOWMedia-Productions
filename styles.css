@@ -898,11 +898,12 @@ p {
 .impact-logo-media img {
   max-width: min(100%, 300px);
   max-height: 150px;
-  filter: brightness(0);
 }
 
 .impact-logo-media {
-  background: #ffffff;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(0, 198, 215, 0.13), transparent 15rem),
+    rgba(10, 14, 23, 0.72);
 }
 
 body[data-theme="light"] .impact-logo-media {

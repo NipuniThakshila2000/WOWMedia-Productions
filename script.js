@@ -7,7 +7,8 @@ const brandLogo = document.querySelector(".brand-mark img");
 const brandLogoDark = "WOW MEDIA-01.png";
 const brandLogoLight = "media/logos-light/1_0010_Wow-Media-Logo-1.png";
 const impactLogo = document.querySelector(".impact-logo-media img");
-const impactLogoSrc = "media/logos-light/1_0002_our-impact-future.png";
+const impactLogoDark = "media/logos/our-impact-future.png";
+const impactLogoLight = "media/logos-light/1_0002_our-impact-future.png";
 const partnerLogoMap = {
   "media/logos/_0000_CIQ-(1)-(2).png": "media/logos-light/1_0000s_0017__0000_CIQ-(1)-(2).png",
   "media/logos/_0001_lpl-logo-copy.jpg.png": "media/logos-light/1_0000s_0000__0001_lpl-logo-copy.jpg.png",
@@ -70,7 +71,7 @@ function updateBrandLogo(theme) {
 
 function updateImpactLogo(theme) {
   if (!impactLogo) return;
-  impactLogo.setAttribute("src", impactLogoSrc);
+  impactLogo.setAttribute("src", theme === "light" ? impactLogoLight : impactLogoDark);
 }
 
 function updatePartnerLogos(theme) {
