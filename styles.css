@@ -985,7 +985,7 @@ body[data-theme="light"] .impact-logo-media {
 }
 
 .portrait-nipuni {
-  --portrait: url("team%20and%20navigators/Nipu%202.png");
+  --portrait: url("team%20and%20navigators/Nipu%203.jpg");
 }
 
 .portrait-nidul {
@@ -998,6 +998,10 @@ body[data-theme="light"] .impact-logo-media {
 
 .portrait-pramuk {
   --portrait: url("team%20and%20navigators/Pramuk.png");
+}
+
+.portrait-pramod {
+  --portrait: url("team%20and%20navigators/Pramod.png");
 }
 
 .map-slot {
