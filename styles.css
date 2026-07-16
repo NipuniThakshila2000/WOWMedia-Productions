@@ -1503,6 +1503,19 @@ body[data-theme="light"] .impact-logo-media {
   text-decoration-color: var(--red);
 }
 
+.service-list-heading {
+  margin-top: 30px;
+  color: var(--text);
+  font-family: var(--font-title);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.service-link-list-spaced {
+  margin-bottom: 42px;
+}
+
 .detail-grid,
 .catalog-grid,
 .policy-grid {
