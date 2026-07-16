@@ -292,6 +292,76 @@ nav?.addEventListener("click", (event) => {
   }
 });
 
+const videoModal = document.querySelector("[data-video-modal]");
+const videoModalFrame = document.querySelector("[data-video-modal-frame]");
+const videoModalTitle = document.querySelector("[data-video-modal-title]");
+const videoModalCloseButtons = document.querySelectorAll("[data-video-modal-close]");
+let lastVideoTrigger = null;
+
+const getYouTubeEmbedUrl = (href) => {
+  try {
+    const url = new URL(href);
+    const isYouTube = url.hostname.includes("youtube.com") || url.hostname.includes("youtu.be");
+    if (!isYouTube) return null;
+
+    const videoId = url.hostname.includes("youtu.be")
+      ? url.pathname.replace("/", "")
+      : url.searchParams.get("v");
+    if (!videoId) return null;
+
+    const start = url.searchParams.get("t")?.replace(/\D/g, "");
+    const embedUrl = new URL(`https://www.youtube.com/embed/${videoId}`);
+    embedUrl.searchParams.set("autoplay", "1");
+    embedUrl.searchParams.set("rel", "0");
+    if (start) embedUrl.searchParams.set("start", start);
+    return embedUrl.toString();
+  } catch {
+    return null;
+  }
+};
+
+const closeVideoModal = () => {
+  if (!videoModal || !videoModalFrame) return;
+  videoModal.hidden = true;
+  videoModal.classList.remove("is-open");
+  videoModalFrame.removeAttribute("src");
+  document.body.classList.remove("has-open-modal");
+  lastVideoTrigger?.focus();
+  lastVideoTrigger = null;
+};
+
+const openVideoModal = (link, embedUrl) => {
+  if (!videoModal || !videoModalFrame || !videoModalTitle) return;
+  lastVideoTrigger = link;
+  videoModalTitle.textContent = link.textContent?.trim() || "Portfolio video";
+  videoModalFrame.src = embedUrl;
+  videoModal.hidden = false;
+  document.body.classList.add("has-open-modal");
+  requestAnimationFrame(() => {
+    videoModal.classList.add("is-open");
+    videoModal.querySelector(".video-modal-close")?.focus();
+  });
+};
+
+document.querySelector(".portfolio-catalog")?.addEventListener("click", (event) => {
+  const link = event.target instanceof Element ? event.target.closest("a[href]") : null;
+  if (!(link instanceof HTMLAnchorElement)) return;
+
+  const embedUrl = getYouTubeEmbedUrl(link.href);
+  if (!embedUrl) return;
+
+  event.preventDefault();
+  openVideoModal(link, embedUrl);
+});
+
+videoModalCloseButtons.forEach((button) => {
+  button.addEventListener("click", closeVideoModal);
+});
+
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && videoModal && !videoModal.hidden) closeVideoModal();
+});
+
 const canvas = document.getElementById("signalCanvas");
 const ctx = canvas?.getContext("2d");
 
