@@ -382,6 +382,11 @@ body[data-theme="light"] .theme-toggle-thumb {
   padding: 108px var(--gutter);
 }
 
+.section:not(.hero):not(.page-hero) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
 .hero {
   position: relative;
   display: flex;

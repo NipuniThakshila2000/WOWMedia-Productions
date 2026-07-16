@@ -128,6 +128,7 @@ if (revealTargets.length) {
   revealTargets.forEach((target, index) => {
     target.style.setProperty("--reveal-index", String(index % 6));
     target.classList.add("reveal-on-scroll");
+    if (target.closest(".hero, .page-hero")) target.classList.add("is-visible");
     if (prefersReducedMotion) target.classList.add("is-visible");
   });
 
@@ -217,22 +218,59 @@ if (metricValues.length) {
 
 const autoplayVideos = document.querySelectorAll("video");
 
-const playVideos = () => {
-  autoplayVideos.forEach((video) => {
-    video.muted = true;
-    video.defaultMuted = true;
-    video.autoplay = true;
-    video.playsInline = true;
-    const playAttempt = video.play();
-    if (playAttempt instanceof Promise) playAttempt.catch(() => {});
+const prepareVideo = (video) => {
+  video.muted = true;
+  video.defaultMuted = true;
+  video.playsInline = true;
+
+  if (video.dataset.loaded === "true") return;
+
+  if (video.dataset.src) {
+    video.src = video.dataset.src;
+    delete video.dataset.src;
+  }
+
+  video.querySelectorAll("source[data-src]").forEach((source) => {
+    source.src = source.dataset.src;
+    delete source.dataset.src;
   });
+
+  video.dataset.loaded = "true";
+  video.load();
+};
+
+const playVideo = (video) => {
+  prepareVideo(video);
+  const playAttempt = video.play();
+  if (playAttempt instanceof Promise) playAttempt.catch(() => {});
 };
 
 if (autoplayVideos.length) {
-  playVideos();
-  window.addEventListener("load", playVideos, { once: true });
-  window.addEventListener("pageshow", playVideos);
-  window.addEventListener("pointerdown", playVideos, { once: true });
+  if ("IntersectionObserver" in window) {
+    const videoObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target;
+          if (!(video instanceof HTMLVideoElement)) return;
+
+          if (entry.isIntersecting) {
+            playVideo(video);
+          } else if (!video.classList.contains("hero-video")) {
+            video.pause();
+          }
+        });
+      },
+      { rootMargin: "360px 0px", threshold: 0.01 }
+    );
+
+    autoplayVideos.forEach((video) => videoObserver.observe(video));
+  } else {
+    autoplayVideos.forEach(playVideo);
+  }
+
+  window.addEventListener("pageshow", () => autoplayVideos.forEach((video) => {
+    if (video.getBoundingClientRect().top < window.innerHeight + 360) playVideo(video);
+  }));
 }
 
 const updateHeader = () => {
